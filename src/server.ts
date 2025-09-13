@@ -1,7 +1,10 @@
 import express, { type Application } from 'express';
+import { Logger } from './common/utils/logger'
 
 
 export class Server {
+    private readonly logger = Logger.child({ label: Server.name })
+
     private readonly app: Application
 
     public constructor () {
@@ -21,6 +24,8 @@ export class Server {
     public async start() {
         const port = 4000
 
-        this.app.listen(port)
+        this.app.listen(port, () => {
+            this.logger.info(`Server running on port ${port}`)
+        })
     }
 }
