@@ -1,6 +1,6 @@
 import express, { type Application } from 'express';
 import { Logger } from './common/utils/logger'
-
+import storageRouter from './routes/storage'
 
 export class Server {
     private readonly logger = Logger.child({ label: Server.name })
@@ -16,9 +16,7 @@ export class Server {
     public async configure() {
         this.app.use(express.json())
 
-        this.app.use('/ping', (req, res)=> {
-            res.json({ message: 'pong' })
-        })
+        this.app.use('/storage', storageRouter)
     }
 
     public async start() {
